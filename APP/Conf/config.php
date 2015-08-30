@@ -1,7 +1,7 @@
 <?php
 return array(
 	//开启应用分组
-	'APP_GROUP_LIST' => 'Index, Admin',
+	'APP_GROUP_LIST' => 'Index,Admin',
 	'DEFAULT_GROUP' => 'Index',
 
 	//数据库连接参数
@@ -13,7 +13,7 @@ return array(
 	'TMPL_VAR_IDENTIFY' => 'array',
 
 	//模板路径
-	//'TMPL_FILE_DEPR' => '_',
+	'TMPL_FILE_DEPR' => '_',
 
 	//默认过滤函数
 	'DEFAULT_FILTER' => 'htmlspecialchars',
