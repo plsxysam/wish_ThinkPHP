@@ -7,10 +7,8 @@
 		public function index(){
 			
 
-			var_dump(C('SESSION_AUTO_START'));
+			//var_dump(C('SESSION_AUTO_START'));
 
-			echo session_id();
-			die;
 			$this->display();
 		}
 

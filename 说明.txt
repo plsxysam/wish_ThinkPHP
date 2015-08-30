@@ -1,2 +1,0 @@
-只处理了SESSION处理DB驱动，Redis处理驱动尚未设置
-http://www.chuanke.com/v1253098-99945-166237.html?st=1093

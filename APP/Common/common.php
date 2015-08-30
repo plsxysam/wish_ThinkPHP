@@ -15,9 +15,8 @@
 				foreach ($phiz as $key => $value) {
 					if($v == '['.$value.']'){   
 						$content = str_replace($v , '<img src="'.__ROOT__.'/Public/Images/phiz/'.$key.'.gif"/>', $content);
-
+						break;
 					}
-					continue;
 				}
 			}
 

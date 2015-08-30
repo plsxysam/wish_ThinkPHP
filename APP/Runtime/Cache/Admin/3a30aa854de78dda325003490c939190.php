@@ -1,7 +1,7 @@
-<html>
+<?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
-	<title>index</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
@@ -10,12 +10,10 @@
 	 
 	<script type="text/javascript" src="__PUBLIC__/js/bootstrapValidator.js"></script>
 
-	<script type="text/javascript">	var verifyURL='{:U("Admin/Login/verify",'','')}';</script>
+	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
 
-</head>
-<body>
-<style type="text/css">
+	<style type="text/css">
         body{
             padding-top: 50px;
             padding-bottom: 40px;
@@ -35,7 +33,9 @@
         line-height: 55px;
         }
     </style>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
 
         <div class="navbar-header">
@@ -68,7 +68,7 @@
                   <input type="password" placeholder="Password" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">Sign in</button>
-                <a class="btn btn-success" href="{:U('Admin/Index/logout')}">logout</a>
+                <a class="btn btn-success" href="<?php echo U('Admin/Index/logout');?>">logout</a>
                 
               </form>
             </div>
@@ -78,22 +78,37 @@
       </div>
     </nav>
 
-    <!-- <h2>heheda</h2> -->
- <div class="container">
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-4"><a href="{:U('Admin/MsgManage/index')}">查看所有日志</a></div>
-            <div class="col-lg-4">入口</div>
-            <div class="col-lg-4"></div>
-        </div>
-    <!--行-->
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-2">首页</div>
-            <div class="col-lg-8">入口</div>
-            <div class="col-lg-2"></div>
-        </div>
+    <div class="container">
+    	<table>
+    		<div class = "row">
+    			<div class="col-lg-2">ID</div>
+    			<div class="col-lg-2">发比者</div>
+    			<div class="col-lg-4">内容</div>
+    			<div class="col-lg-2">发布时间</div>
+    			<div class="col-lg-2">操作</div>
+    		</div>
+    		<?php if(is_array($wish)): foreach($wish as $key=>$v): ?><div class = "row">
+	    			<div class="col-lg-2"><?php echo ($v["id"]); ?></div>
+	    			<div class="col-lg-2"><?php echo ($v["username"]); ?></div>
+	    			<div class="col-lg-4"><?php echo (replace_phiz($v["content"])); ?></div>
+	    			<div class="col-lg-2"><?php echo (date('y-m-d H:i',$v["time"])); ?></div>
+	    			<div class="col-lg-2"><a href="<?php echo U('Admin/MsgManage/delete', array('id' => $v['id']));?>">删除</a></div>
+	    		</div><?php endforeach; endif; ?>
+    		<div class = "row">
+    			<div class="col-lg-4 col-lg-offset-4"><?php echo ($page); ?></div>
+    		</div>
+    	</table>
 
+    </div>
+	<!-- <table>
+		<tr>
+			<th>ID</th>
+			<th>发比者</th>
+			<th>内容</th>
+			<th>发布时间</th>
+			<th>操作</th>
+		</tr>
+	</table> -->
 
 </body>
 </html>
