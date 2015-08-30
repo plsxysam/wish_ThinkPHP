@@ -1,7 +1,7 @@
 <?php 
 
-	define('APP_NAME', './APP');
-	define('APP_PATH', './APP/');
+	define('APP_NAME', './App');
+	define('APP_PATH', './App/');
 	define('APP_DEBUG', TRUE);
-	include './ThinkPHP31/ThinkPHP.php';
+	require './ThinkPHP31/ThinkPHP.php';
  ?>

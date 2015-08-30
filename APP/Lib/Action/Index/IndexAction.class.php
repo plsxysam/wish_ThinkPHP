@@ -1,22 +1,8 @@
-<?php 
-
-Class IndexAction extends Action {
-
-	public function index()
-	{
-		$this -> display();
-
-	}
-
-	//异步发布处理
-	public function handle(){
-		if(!IS_POST) halt('页面不存在');
-
-		//IF(IS_POST)
-		//$this->isAjax();
-		//var_dump(IS_POST);
-
-
+<?php
+// 本类由系统自动生成，仅供测试用途
+//这是index控制器
+class IndexAction extends Action {
+    public function index(){
+		echo 'This is index';
 	}
 }
- ?>
