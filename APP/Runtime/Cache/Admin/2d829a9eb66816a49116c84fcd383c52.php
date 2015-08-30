@@ -1,7 +1,7 @@
 <?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
-	<title>index</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
@@ -13,9 +13,7 @@
 	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
 
-</head>
-<body>
-<style type="text/css">
+	<style type="text/css">
         body{
             padding-top: 50px;
             padding-bottom: 40px;
@@ -27,15 +25,22 @@
             padding-left:6px;
             margin: 0 auto;
         }
-        .col-lg-4,.col-lg-2,.col-lg-8{height:55px;
+        .form-signin{
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        /*.col-lg-4,.col-lg-2,.col-lg-8{height:55px;
         background:#099;
         border-right: 1px solid #cccccc;
         color: #ffffff;
         text-align: center;
         line-height: 55px;
-        }
+        }*/
     </style>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
 
         <div class="navbar-header">
@@ -78,25 +83,42 @@
       </div>
     </nav>
 
-    <!-- <h2>heheda</h2> -->
- <div class="container">
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-4"><a href="<?php echo U('Admin/MsgManage/index');?>">查看所有日志</a></div>
-            <div class="col-lg-4">入口</div>
-            <div class="col-lg-4"></div>
-        </div>
-    <!--行-->
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-2"><a href="">用户列表</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/role');?>">角色列表</a></div>
-            <div class="col-lg-2"><a href="">节点列表</a></div>
-            <div class="col-lg-2"><a href="">添加用户</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addRole');?>">添加角色</a></div>
-            <div class="col-lg-2"><a href="">添加节点</a></div>
-        </div>
-
+    <div class="container">
+    		<div class = "row">
+                <section>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="page-header">
+                            <h2>添加角色</h2>
+                        </div>
+                     </div>
+                <form id="defaultForm" method="post" class="form-horizontal" action="<?php echo U('Admin/Rbac/addRoleHandle');?>">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">角色名称：</label>
+                        <div class="col-lg-5">
+                            <input type = "text" name = "name" class = "form-control" placeholder ="角色名称" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-lg-3 control-label">角色描述：</label>
+                            <div class="col-lg-5">
+                                <input type ="text" name = "remark" class = "form-control" placeholder="角色描述" >
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">是否开启：</label>
+                        <div class="col-lg-5">
+                            <input type="radio" name="status" value'1' checked='checked'/>&nbsp;开启&nbsp;
+                            <input type="radio" name="status" value'0'/>&nbsp;关闭&nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-9 col-lg-offset-3">
+                            <button type="submit" class="btn btn-info">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+    </div>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
-	<title>index</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
@@ -13,9 +13,7 @@
 	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
 
-</head>
-<body>
-<style type="text/css">
+	<style type="text/css">
         body{
             padding-top: 50px;
             padding-bottom: 40px;
@@ -35,7 +33,9 @@
         line-height: 55px;
         }
     </style>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
 
         <div class="navbar-header">
@@ -78,25 +78,30 @@
       </div>
     </nav>
 
-    <!-- <h2>heheda</h2> -->
- <div class="container">
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-4"><a href="<?php echo U('Admin/MsgManage/index');?>">查看所有日志</a></div>
-            <div class="col-lg-4">入口</div>
-            <div class="col-lg-4"></div>
-        </div>
-    <!--行-->
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-2"><a href="">用户列表</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/role');?>">角色列表</a></div>
-            <div class="col-lg-2"><a href="">节点列表</a></div>
-            <div class="col-lg-2"><a href="">添加用户</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addRole');?>">添加角色</a></div>
-            <div class="col-lg-2"><a href="">添加节点</a></div>
-        </div>
+    <div class="container">
+    	<table>
+    		<div class = "row">
+    			<div class="col-lg-2">ID</div>
+    			<div class="col-lg-2">角色名称</div>
+    			<div class="col-lg-4">角色描述</div>
+    			<div class="col-lg-2">角色开启状态</div>
+    			<div class="col-lg-2">操作</div>
+    		</div>
+    		<?php if(is_array($role)): foreach($role as $key=>$v): ?><div class = "row">
+	    			<div class="col-lg-2"><?php echo ($v["id"]); ?></div>
+	    			<div class="col-lg-2"><?php echo ($v["name"]); ?></div>
+	    			<div class="col-lg-4"><?php echo ($v["remark"]); ?></div>
+	    			<div class="col-lg-2">
+                        <?php if($v["status"]): ?>开启<?php else: ?>关闭<?php endif; ?>
+                    </div>
+	    			<div class="col-lg-2"><a href="<?php echo U('Admin/');?>">配置权限</a></div>
+	    		</div><?php endforeach; endif; ?>
+    		<div class = "row">
+    			<div class="col-lg-4 col-lg-offset-4"><?php echo ($page); ?></div>
+    		</div>
+    	</table>
 
+    </div>
 
 </body>
 </html>
