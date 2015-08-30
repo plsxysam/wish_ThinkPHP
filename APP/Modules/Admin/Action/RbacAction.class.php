@@ -68,5 +68,45 @@ class RbacAction extends CommonAction{
 			$this->error('添加失败');//, U('Admin/Rbac/addNode')
 		}
 	}
+
+	//配置权限
+	public function access() {
+		$rid = I('rid', 0,'intval');
+
+		$node = M('node')->order('sort')->select();
+		$this->node = node_merge($node);
+		$this->rid = $rid;
+		$this->display();
+	}
+
+	//修改权限
+	public function setAccess(){
+		$db = M('access');
+		$rid = I('rid', 0, 'intval');
+
+		//清空原权限
+		$db->where(array('role_id' => $rid))->delete();
+		$data = array();
+		//生成新权限
+		foreach ($_POST['access'] as $v ) {
+			$tmp = explode('_', $v);
+			$data[] = array(
+				'role_id' => $rid,
+				'node_id' => $tmp[0],
+				'level' => $tmp[1]
+				);
+		}
+
+		//插入新权限
+		if($db->addAll($data)){
+			$this->success('修改成功',U('Admin/Rbac/role'));
+		} else {
+			$this->error('修改失败');
+		}
+
+
+
+	}
+
 }
  ?>

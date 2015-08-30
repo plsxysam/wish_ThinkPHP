@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
-	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
 	 
 	<script type="text/javascript" src="__PUBLIC__/js/bootstrapValidator.js"></script>
@@ -25,14 +25,22 @@
             padding-left:6px;
             margin: 0 auto;
         }
-        .col-lg-4,.col-lg-2,.col-lg-8{height:55px;
-        background:#099;
-        border-right: 1px solid #cccccc;
-        color: #ffffff;
-        text-align: center;
-        line-height: 55px;
-        }
     </style>
+    <script type="text/javascript">
+        $(function () {
+            
+            $('input[level=1]').click(function(){
+                var inputs = $(this).parents('.ll').find('input');
+                $(this).attr('checked') ? inputs.attr('checked', 'checked') : inputs.removeAttr('checked');
+            });
+
+            $('input[level=2]').click(function(){
+                var inputs = $(this).parents('.ll2').find('input');
+                $(this).attr('checked') ? inputs.attr('checked', 'checked') : inputs.removeAttr('checked');
+            });
+
+        });
+    </script>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
@@ -81,21 +89,34 @@
     <div class="container">
     	<table>
     		<div class = "row">
-    			<div class="col-lg-2">ID</div>
-    			<div class="col-lg-2">角色名称</div>
-    			<div class="col-lg-4">角色描述</div>
-    			<div class="col-lg-2">角色开启状态</div>
-    			<div class="col-lg-2">操作</div>
-    		</div>
-    		<?php if(is_array($role)): foreach($role as $key=>$v): ?><div class = "row">
-	    			<div class="col-lg-2"><?php echo ($v["id"]); ?></div>
-	    			<div class="col-lg-2"><?php echo ($v["name"]); ?></div>
-	    			<div class="col-lg-4"><?php echo ($v["remark"]); ?></div>
-	    			<div class="col-lg-2">
-                        <?php if($v["status"]): ?>开启<?php else: ?>关闭<?php endif; ?>
+    			<div class="col-lg-8 col-lg-offset-2">
+                    <div class="page-header">
+                        <h2><a href="<?php echo U('Admin/Rbac/role');?>">返回</a></h2>
                     </div>
-	    			<div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/access', array('rid' => $v["id"]));?>">配置权限</a></div>
-	    		</div><?php endforeach; endif; ?>
+                </div>
+    		</div>
+            <form method="post" class="form-horizontal" action="<?php echo U('Admin/Rbac/setAccess');?> ">
+        		<?php if(is_array($node)): foreach($node as $key=>$app): ?><div class = "ll">
+            			<div class = "row">
+        	    			<div class="col-lg-4 col-lg-offset-2"><?php echo ($app["title"]); ?><input type="checkbox" name='access[]' level='1' value='<?php echo ($app["id"]); ?>_1'></div>
+
+        	    		</div>
+                        <?php if(is_array($app["child"])): foreach($app["child"] as $key=>$action): ?><div class = "ll2">
+                            <div class = "row">
+                                <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($action["title"]); ?><input type="checkbox" name='access[]' level='2' value='<?php echo ($action["id"]); ?>_2'></div>
+                            </div>
+                            <?php if(is_array($action["child"])): foreach($action["child"] as $key=>$method): ?><div class = "row">
+                                    <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($method["title"]); ?><input type="checkbox" name='access[]' level='3' value='<?php echo ($method["id"]); ?>_3'></div>
+                                </div><?php endforeach; endif; ?></div><?php endforeach; endif; ?>
+                    </div><?php endforeach; endif; ?>
+
+                    <div class="form-group">
+                        <div class="col-lg-9 col-lg-offset-3">
+                            <input type="hidden" name='rid' value='<?php echo ($rid); ?>' />
+                            <button type="submit" class="btn btn-info">提交</button>
+                        </div>
+                    </div>
+            </form>
     		<div class = "row">
     			<div class="col-lg-4 col-lg-offset-4"><?php echo ($page); ?></div>
     		</div>

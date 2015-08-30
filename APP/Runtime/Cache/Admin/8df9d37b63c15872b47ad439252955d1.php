@@ -5,14 +5,15 @@
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
-	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js">
+        
+    </script>
 	<script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
 	 
 	<script type="text/javascript" src="__PUBLIC__/js/bootstrapValidator.js"></script>
 
 	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
-
 	<style type="text/css">
         body{
             padding-top: 50px;
@@ -25,14 +26,18 @@
             padding-left:6px;
             margin: 0 auto;
         }
-        .col-lg-4,.col-lg-2,.col-lg-8{height:55px;
-        background:#099;
-        border-right: 1px solid #cccccc;
-        color: #ffffff;
-        text-align: center;
-        line-height: 55px;
-        }
     </style>
+    <script type="text/javascript">
+        $(function(){
+
+            $('input[level=1]').click(function(){
+                var inputs = $(this).parents('.app').find('input');
+                $(this).attr('checked') ? inputs.attr('checked', 'checked') : inputs.removeAttr('checked');
+            });
+
+
+        });
+    </script>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
@@ -46,17 +51,17 @@
             <span class="icon-bar"></span>
           </button>
           <a href="#" class = "navbar-brand">Freescale</a>
-          <!-- <a class="navbar-brand" href="#">é¦–é¡µ</a>
-          <a class="navbar-brand" href="#">æµ‹è¯•</a>
-          <a class="navbar-brand" href="#">å¼€å‘</a> -->
+          <!-- <a class="navbar-brand" href="#">Ê×Ò³</a>
+          <a class="navbar-brand" href="#">²âÊÔ</a>
+          <a class="navbar-brand" href="#">¿ª·¢</a> -->
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
             <div class = "navbar-right">
                 <ul class="nav navbar-nav">
-                        <li><a href="#">é¦–é¡µ</a> </li>
-                        <li><a href="#">æµ‹è¯•</a> </li>
-                        <li><a href="#">å¼€å‘</a> </li>
+                        <li><a href="#">Ê×Ò³</a> </li>
+                        <li><a href="#">²âÊÔ</a> </li>
+                        <li><a href="#">¿ª·¢</a> </li>
                         <li><a href="#">help</a> </li>
                 </ul>
 
@@ -81,21 +86,28 @@
     <div class="container">
     	<table>
     		<div class = "row">
-    			<div class="col-lg-2">ID</div>
-    			<div class="col-lg-2">è§’è‰²åç§°</div>
-    			<div class="col-lg-4">è§’è‰²æè¿°</div>
-    			<div class="col-lg-2">è§’è‰²å¼€å¯çŠ¶æ€</div>
-    			<div class="col-lg-2">æ“ä½œ</div>
-    		</div>
-    		<?php if(is_array($role)): foreach($role as $key=>$v): ?><div class = "row">
-	    			<div class="col-lg-2"><?php echo ($v["id"]); ?></div>
-	    			<div class="col-lg-2"><?php echo ($v["name"]); ?></div>
-	    			<div class="col-lg-4"><?php echo ($v["remark"]); ?></div>
-	    			<div class="col-lg-2">
-                        <?php if($v["status"]): ?>å¼€å¯<?php else: ?>å…³é—­<?php endif; ?>
+    			<div class="col-lg-8 col-lg-offset-2">
+                    <div class="page-header">
+                        <h2><a href="<?php echo U('Admin/Rbac/role');?>">·µ»Ø</a></h2>
                     </div>
-	    			<div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/access', array('rid' => $v["id"]));?>">é…ç½®æƒé™</a></div>
-	    		</div><?php endforeach; endif; ?>
+                </div>
+    		</div>
+    		<?php if(is_array($node)): foreach($node as $key=>$app): ?><div class = 'app'>
+    			<div class = "row">
+	    			<div class="col-lg-4 col-lg-offset-2"><?php echo ($app["title"]); ?><input type="checkbox" name='access[]' value='<?php echo ($app["id"]); ?>_1' level = '1' /></div>
+                    
+	    		</div>
+                <?php if(is_array($app["child"])): foreach($app["child"] as $key=>$action): ?><div class = "row">
+                        <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($action["title"]); ?><input type="checkbox" name='access' value='<?php echo ($action["id"]); ?>_2' level='2' /></div>
+                        
+
+                    </div>
+                    <?php if(is_array($action["child"])): foreach($action["child"] as $key=>$method): ?><div class = "row">
+                        <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($method["title"]); ?><input type="checkbox" name='access' value='<?php echo ($method["id"]); ?>_3' level='3' /></div>
+                        
+
+                    </div><?php endforeach; endif; endforeach; endif; ?>
+                </div><?php endforeach; endif; ?>
     		<div class = "row">
     			<div class="col-lg-4 col-lg-offset-4"><?php echo ($page); ?></div>
     		</div>
