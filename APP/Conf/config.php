@@ -21,6 +21,9 @@ return array(
 	//自定义SESSION 数据库储存
 	'SESSION_TYPE' => 'Db',
 	//'SESSION_TYPE' => 'Redis',
+
+	'APP_GROUP_MODE' => 1,
+	'APP_GROUP_PATH' => 'Modules',
 	
 );
 ?>
