@@ -14,5 +14,8 @@ return array(
 
 	//模板路径
 	//'TMPL_FILE_DEPR' => '_',
+
+	//默认过滤函数
+	'DEFAULT_FILTER' => 'htmlspecialchars',
 );
 ?>

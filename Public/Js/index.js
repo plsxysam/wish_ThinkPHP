@@ -77,7 +77,7 @@ $(function () {
 		var username = $( 'input[name=username]');
 		var content = $( 'textarea[name=content]');
 
-		if(username.val() == ''){
+		if(username.val() == ''){ 
 			alert('用户不能为空');
 			username.focus();
 		}
@@ -87,9 +87,26 @@ $(function () {
 			content.focus();
 		}
 
-		$.post(handleUrl, {username:username.val(), content:content.val()} , function(data){}, 'json');
+		$.post(handleUrl, {username:username.val(), content:content.val()} , 
+			function(data){
+				if (data.status) {
+					var str = '<dl class="paper a1">';
+						str += '<dt><span class="username">' + data.username + '</span>';
+						str += '<span class="num">No.' + data.id +'</span>';
+						str += '</dt><dd class="content">' + data.content + '</dd><dd class="bottom">';
+						str += '<span class="time">' + data.time + '</span>';
+						str += '<a href="" class="close"></a></dd>';
+						str += '</dl>';
 
-	});s
+						$( '#main' ).append(str);
+						$( '#close' ).click();
+
+				} else{
+					alert('发布失败');
+				}
+			}, 'json');
+
+	});
 
 });
 
