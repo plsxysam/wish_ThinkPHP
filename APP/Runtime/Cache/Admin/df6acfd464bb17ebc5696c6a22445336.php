@@ -1,7 +1,7 @@
 <?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
-	<title>index</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
@@ -13,9 +13,7 @@
 	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
 
-</head>
-<body>
-<style type="text/css">
+	<style type="text/css">
         body{
             padding-top: 50px;
             padding-bottom: 40px;
@@ -27,15 +25,10 @@
             padding-left:6px;
             margin: 0 auto;
         }
-        .col-lg-4,.col-lg-2,.col-lg-8{height:55px;
-        background:#099;
-        border-right: 1px solid #cccccc;
-        color: #ffffff;
-        text-align: center;
-        line-height: 55px;
-        }
     </style>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
 
         <div class="navbar-header">
@@ -78,25 +71,34 @@
       </div>
     </nav>
 
-    <!-- <h2>heheda</h2> -->
- <div class="container">
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-4"><a href="<?php echo U('Admin/MsgManage/index');?>">查看所有日志</a></div>
-            <div class="col-lg-4">入口</div>
-            <div class="col-lg-4"></div>
-        </div>
-    <!--行-->
-        <div class ="row"> 
-        <!--列-->
-            <div class="col-lg-2"><a href="">用户列表</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/role');?>">角色列表</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/node');?>">节点列表</a></div>
-            <div class="col-lg-2"><a href="">添加用户</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addRole');?>">添加角色</a></div>
-            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addNode');?>">添加节点</a></div>
-        </div>
+    <div class="container">
+    	<table>
+    		<div class = "row">
+    			<div class="col-lg-8 col-lg-offset-2">
+                    <div class="page-header">
+                        <h2><a href="<?php echo U('Admin/Rbac/addNode');?>">添加应用</a></h2>
+                    </div>
+                </div>
+    		</div>
+    		<?php if(is_array($node)): foreach($node as $key=>$app): ?><div class = "row">
+	    			<div class="col-lg-4 col-lg-offset-2"><?php echo ($app["title"]); ?>[<a href="<?php echo U('Admin/Rbac/addNode', array('pid' => $app["id"], 'level' => 2));?>">添加控制器</a>][<a href="">修改</a>]
+                            [<a href="">删除</a>]</div>
+	    		</div>
+                <?php if(is_array($app["child"])): foreach($app["child"] as $key=>$action): ?><div class = "row">
+                        <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($action["title"]); ?>[<a href="<?php echo U('Admin/Rbac/addNode', array('pid' => $action["id"], 'level' => 3));?>">添加方法</a>][<a href="">修改</a>]
+                            [<a href="">删除</a>]</div>
+                    </div>
+                    <?php if(is_array($action["child"])): foreach($action["child"] as $key=>$method): ?><div class = "row">
+                        <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($method["title"]); ?>
+                            [<a href="">修改</a>]
+                            [<a href="">删除</a>]</div>
+                    </div><?php endforeach; endif; endforeach; endif; endforeach; endif; ?>
+    		<div class = "row">
+    			<div class="col-lg-4 col-lg-offset-4"><?php echo ($page); ?></div>
+    		</div>
+    	</table>
 
+    </div>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?><html>
+<html>
 <head>
 	<title></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -10,7 +10,7 @@
 	 
 	<script type="text/javascript" src="__PUBLIC__/js/bootstrapValidator.js"></script>
 
-	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
+	<script type="text/javascript">	var verifyURL='{:U("Admin/Login/verify",'','')}';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
 
 	<style type="text/css">
@@ -25,17 +25,22 @@
             padding-left:6px;
             margin: 0 auto;
         }
-        .col-lg-4,.col-lg-2,.col-lg-8{height:55px;
+        .form-signin{
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        /*.col-lg-4,.col-lg-2,.col-lg-8{height:55px;
         background:#099;
         border-right: 1px solid #cccccc;
         color: #ffffff;
         text-align: center;
         line-height: 55px;
-        }
+        }*/
     </style>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
 
         <div class="navbar-header">
@@ -68,7 +73,7 @@
                   <input type="password" placeholder="Password" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">Sign in</button>
-                <a class="btn btn-success" href="<?php echo U('Admin/Index/logout');?>">logout</a>
+                <a class="btn btn-success" href="{:U('Admin/Index/logout')}">logout</a>
                 
               </form>
             </div>
@@ -79,28 +84,48 @@
     </nav>
 
     <div class="container">
-    	<table>
     		<div class = "row">
-    			<div class="col-lg-2">ID</div>
-    			<div class="col-lg-2">角色名称</div>
-    			<div class="col-lg-4">角色描述</div>
-    			<div class="col-lg-2">角色开启状态</div>
-    			<div class="col-lg-2">操作</div>
-    		</div>
-    		<?php if(is_array($role)): foreach($role as $key=>$v): ?><div class = "row">
-	    			<div class="col-lg-2"><?php echo ($v["id"]); ?></div>
-	    			<div class="col-lg-2"><?php echo ($v["name"]); ?></div>
-	    			<div class="col-lg-4"><?php echo ($v["remark"]); ?></div>
-	    			<div class="col-lg-2">
-                        <?php if($v["status"]): ?>开启<?php else: ?>关闭<?php endif; ?>
+                <section>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="page-header">
+                            <h2>添加{$type}</h2>
+                        </div>
+                     </div>
+                <form id="defaultForm" method="post" class="form-horizontal" action="{:U('Admin/Rbac/addNodeHandle')}">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">{$type}名称：</label>
+                        <div class="col-lg-5">
+                            <input type = "text" name = "name" class = "form-control" placeholder ="角色名称" >
+                        </div>
                     </div>
-	    			<div class="col-lg-2"><a href="<?php echo U('Admin/');?>">配置权限</a></div>
-	    		</div><?php endforeach; endif; ?>
-    		<div class = "row">
-    			<div class="col-lg-4 col-lg-offset-4"><?php echo ($page); ?></div>
-    		</div>
-    	</table>
-
+                    <div class="form-group">
+                            <label class="col-lg-3 control-label">{$type}描述：</label>
+                            <div class="col-lg-5">
+                                <input type ="text" name = "title" class = "form-control" placeholder="角色描述" >
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">是否开启：</label>
+                        <div class="col-lg-5">
+                            <input type="radio" name="status" value='1' checked='checked'/>&nbsp;开启&nbsp;
+                            <input type="radio" name="status" value='0'/>&nbsp;关闭&nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-lg-3 control-label">排序：</label>
+                            <div class="col-lg-5">
+                                <input type ="text" name = "sort" class ="form-control" value='1'>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-9 col-lg-offset-3">
+                            <input type='hidden' name='pid' value='{$pid}'/>
+                            <input type='hidden' name='level' value='{$level}'>
+                            <button type="submit" class="btn btn-info">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
     </div>
 
 </body>

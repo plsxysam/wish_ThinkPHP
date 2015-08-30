@@ -15,7 +15,10 @@ class RbacAction extends CommonAction{
 
 	//节点列表
 	public function node(){
-
+		$field = array('id', 'name', 'title', 'pid');
+		$node = M('node')->field($field)->order('sort')->select();
+		$this->node = node_merge($node);
+		$this->display();
 	}
 
 	//添加用户
@@ -33,13 +36,37 @@ class RbacAction extends CommonAction{
 		if(M('role')->add($_POST)){
 			$this->success('添加成功',U('Admin/Rbac/role'));
 		} else {
-			$this->error('添加失败', U('Admin/Rbac/addRole'));
+			$this->error('添加失败');//, U('Admin/Rbac/addRole')
 		}
 	}
 
 	//添加节点
 	public function addNode(){
-		
+		$this->pid = I('pid', 0, 'intval');
+		$this->level = I('level', 1, 'intval');
+
+		switch($this->level){
+			case 1 :
+				$this->type = '应用';
+				break;
+			case 2 :
+				$this->type = '控制器';
+				break;
+			case 3 :
+				$this->type = '动作方法';
+				break;
+		}
+
+		$this->display();
+	}
+
+	//添加节点表单处理
+	public function addNodeHandle(){
+		if(M('node')->add($_POST)){
+			$this->success('添加成功',U('Admin/Rbac/node'));
+		} else {
+			$this->error('添加失败');//, U('Admin/Rbac/addNode')
+		}
 	}
 }
  ?>
