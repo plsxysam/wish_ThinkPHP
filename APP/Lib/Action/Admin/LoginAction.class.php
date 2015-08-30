@@ -5,6 +5,12 @@
 
 		//后台登陆视图
 		public function index(){
+			
+
+			var_dump(C('SESSION_AUTO_START'));
+
+			echo session_id();
+			die;
 			$this->display();
 		}
 
@@ -33,7 +39,7 @@
 			session('username', $user['username']);
 			session('logintime', date('Y-m-d H:i:s', $user['logintime']));
 			session('loginip', $user['loginip']);
-			
+
 			M('user')->save($data);
 			$this->redirect('Admin/Index/index');
 		} 

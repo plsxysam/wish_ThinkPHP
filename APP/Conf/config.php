@@ -17,5 +17,10 @@ return array(
 
 	//默认过滤函数
 	'DEFAULT_FILTER' => 'htmlspecialchars',
+
+	//自定义SESSION 数据库储存
+	//'SESSION_TYPE' => 'Db',
+	'SESSION_TYPE' => 'Redis',
+	
 );
 ?>
