@@ -1,10 +1,7 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html >
-<html>
+<?php if (!defined('THINK_PATH')) exit();?><html>
 <head>
+	<title></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>login</title>
-	
-	<!-- <link rel="stylesheet" type="text/css" href=""> -->
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css"/>
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrapValidator.min.css"/>
 	 
@@ -16,11 +13,11 @@
 	<script type="text/javascript">	var verifyURL='<?php echo U("Admin/Login/verify",'','');?>';</script>
 	<script type="text/javascript" src="__PUBLIC__/js/login.js"></script>
 
-	
 	<style type="text/css">
-		body{
+        body{
             padding-top: 50px;
             padding-bottom: 40px;
+
             background-color:  #ccc;
         }
         nav{
@@ -28,12 +25,19 @@
             padding-left:6px;
             margin: 0 auto;
         }
-		.form-signin{
-			max-width: 330px;
-			padding: 15px;
-			margin: 0 auto;
-		}
-	</style>
+        .form-signin{
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        /*.col-lg-4,.col-lg-2,.col-lg-8{height:55px;
+        background:#099;
+        border-right: 1px solid #cccccc;
+        color: #ffffff;
+        text-align: center;
+        line-height: 55px;
+        }*/
+    </style>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -79,56 +83,59 @@
       </div>
     </nav>
 
-	<div class="container">
-		<div class = "row">
-			<section>
-				<div class="col-lg-8 col-lg-offset-2">
-					<div class="page-header">
-                        <h2>请输入登录信息</h2>
-                    </div>
-				</div>
-
-				<form id="defaultForm" method="post" class="form-horizontal" action="<?php echo U('Admin/Login/login');?>">
-					<div class="form-group">
-						<label class="col-lg-3 control-label">Username</label>
-						<div class="col-lg-5">
+    <div class="container">
+    		<div class = "row">
+                <section>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="page-header">
+                            <h2>添加用户</h2>
+                        </div>
+                     </div>
+                <form id="defaultForm" method="post" class="form-horizontal" action="<?php echo U('Admin/Rbac/addUserHandle');?>">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Username</label>
+                        <div class="col-lg-5">
                             <input id = "username" type = "text" name = "username" class = "form-control" placeholder ="用户名" >
                         </div>
-					</div>
-					<div class="form-group">
+                    </div>
+                    <div class="form-group">
                             <label class="col-lg-3 control-label">Password</label>
                             <div class="col-lg-5">
                                 <input type ="password" name = "password" class = "form-control" placeholder="密码" >
                             </div>
                     </div>
                     <div class="form-group">
-                    	<label class="col-lg-3 control-label">code</label>
-                    	<div class="col-lg-5">
-                            <input type = "code" name="code" class ="form-control" placeholder="请输入验证码">
-                            <img id="code" src="<?php echo U('Admin/Login/verify');?>">
-						<a href="javascript:void(change_code(this));">看不清</a>
-                        </div>
-					</div>
-					<div class="form-group col-lg-9 col-lg-offset-3">
-						<label class = "checkbox">
-							<input type = "checkbox" value = "remember-me">记住登录
-						</label>
-					</div>
-					<div class="form-group">
+                            <label class="col-lg-3 control-label">Retype Password</label>
+                            <div class="col-lg-5">
+                                <input type ="password" name = "confirmPassword" class = "form-control" placeholder="密码" >
+                            </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-lg-3 control-label">所属角色</label>
+                            <div class="col-lg-5" name="role_id[]">
+                                <?php if(is_array($role)): foreach($role as $key=>$v): ?><div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="role_id[]" value="<?php echo ($v['id']); ?>" /> <?php echo ($v["name"]); ?>(<?php echo ($v["remark"]); ?>)
+                                        </label>
+                                    </div><?php endforeach; endif; ?>
+                            </div>
+                    </div>
+
+                    <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-3">
-                            <button type="submit" class="btn btn-primary" name="signup" value="Sign up">登录</button>
+                            <button type="submit" class="btn btn-primary" name="signup" value="Sign up">添加</button>
                             <button type="button" class="btn btn-info" id="validateBtn">Manual validate</button>
                             <button type="button" class="btn btn-info" id="resetBtn">Reset form</button>
                         </div>
                     </div>
-				</form>
-			</section>
-		</div>
-	</div>
-</body>
-	<script type="text/javascript">
+                </form>
+            </section>
+    </div>
 
-	$(document).ready(function() {
+</body>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
     // Generate a simple captcha
     function randomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -159,11 +166,6 @@
                         regexp: /^[a-zA-Z0-9_\.]+$/,
                         message: 'The username can only consist of alphabetical, number, dot and underscore'
                     }
-                    // ,
-                    // different: {
-                    //     field: 'password',
-                    //     message: 'The username and password cannot be the same as each other'
-                    // }
                 }
             },
             password: {
@@ -175,11 +177,24 @@
                         field: 'confirmPassword',
                         message: 'The password and its confirm are not the same'
                     }
-                    // ,
-                    // different: {
-                    //     field: 'username',
-                    //     message: 'The password cannot be the same as username'
-                    // }
+                }
+            },
+            confirmPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'The confirm password is required and cannot be empty'
+                    },
+                    identical: {
+                        field: 'password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            },
+            role_id[]: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please specify at least one language you can speak'
+                    }
                 }
             }
         }
@@ -194,5 +209,5 @@
         $('#defaultForm').data('bootstrapValidator').resetForm(true);
     });
 });
-	</script>
+    </script>
 </html>

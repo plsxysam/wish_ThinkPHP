@@ -54,7 +54,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <div class = "navbar-right">
                 <ul class="nav navbar-nav">
-                        <li><a href="#">首页</a> </li>
+                        <li><a href="<?php echo U('../');?>">首页</a> </li>
                         <li><a href="#">测试</a> </li>
                         <li><a href="#">开发</a> </li>
                         <li><a href="#">help</a> </li>

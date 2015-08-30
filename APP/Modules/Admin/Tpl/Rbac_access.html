@@ -62,7 +62,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <div class = "navbar-right">
                 <ul class="nav navbar-nav">
-                        <li><a href="#">首页</a> </li>
+                        <li><a href="{:U('../')}">首页</a> </li>
                         <li><a href="#">测试</a> </li>
                         <li><a href="#">开发</a> </li>
                         <li><a href="#">help</a> </li>
@@ -99,17 +99,17 @@
         		<foreach name='node' item='app'>
                     <div class = "ll">
             			<div class = "row">
-        	    			<div class="col-lg-4 col-lg-offset-2">{$app.title}<input type="checkbox" name='access[]' level='1' value='{$app.id}_1'></div>
+        	    			<div class="col-lg-4 col-lg-offset-2">{$app.title}<input type="checkbox" name='access[]' level='1' value='{$app.id}_1' <if condition= '$app["access"]'>checked='checked'</if> /></div>
 
         	    		</div>
                         <foreach name='app.child' item='action'>
                             <div class = "ll2">
                             <div class = "row">
-                                <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$action.title}<input type="checkbox" name='access[]' level='2' value='{$action.id}_2'></div>
+                                <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$action.title}<input type="checkbox" name='access[]' level='2' value='{$action.id}_2'  <if condition= '$action["access"]'>checked='checked'</if> /></div>
                             </div>
                             <foreach name='action.child' item='method'>
                                 <div class = "row">
-                                    <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$method.title}<input type="checkbox" name='access[]' level='3' value='{$method.id}_3'></div>
+                                    <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$method.title}<input type="checkbox" name='access[]' level='3' value='{$method.id}_3'  <if condition= '$method["access"]'>checked='checked'</if> /></div>
                                 </div>
                             </foreach></div>
                         </foreach>

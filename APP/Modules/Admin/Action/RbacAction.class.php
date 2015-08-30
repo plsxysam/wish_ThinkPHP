@@ -4,7 +4,10 @@ class RbacAction extends CommonAction{
 
 	//用户列表
 	public function index(){
-
+		//field(array('id','username','logintime','loginip','lock'))
+		$this->user = D('UserRelation')->field('password',true)->relation(true)->select();
+		//p($user);die;//this->user
+		$this->display();
 	}
 
 	//角色列表
@@ -23,7 +26,29 @@ class RbacAction extends CommonAction{
 
 	//添加用户
 	public function addUser(){
-
+		$this->role = M('role')->select();
+		$this->display();
+	}
+	public function addUserHandle(){
+		$user = array(
+			'username' => I('username'),
+			'password' => I('password','','md5'),
+			'logintime' => time(),
+			'loginip' => get_client_ip()
+			);
+		$role = array();
+		if($uid = M('user')->add($user)){
+			foreach ($_POST['role_id'] as $v) {
+				$role[] = array(
+					'role_id' => $v,
+					'user_id' => $uid
+					);
+			}
+			M('role_user')->addAll($role);
+			$this->success('添加成功',U('Admin/Rbac/index'));
+		} else {
+			$this->error('添加失败');
+		}
 	}
 
 	//添加角色
@@ -72,10 +97,16 @@ class RbacAction extends CommonAction{
 	//配置权限
 	public function access() {
 		$rid = I('rid', 0,'intval');
+		$field = array('id', 'name', 'title', 'pid');
+		$node = M('node')->order('sort')->field($field)->select();
 
-		$node = M('node')->order('sort')->select();
-		$this->node = node_merge($node);
+
+		//原有权限
+		$access = M('access')->where(array('role_id' => $rid))->getField('node_id', true);
+
+		$this->node = node_merge($node,$access);
 		$this->rid = $rid;
+		//p($access);die;
 		$this->display();
 	}
 

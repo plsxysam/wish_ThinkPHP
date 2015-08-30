@@ -98,15 +98,15 @@
             <form method="post" class="form-horizontal" action="<?php echo U('Admin/Rbac/setAccess');?> ">
         		<?php if(is_array($node)): foreach($node as $key=>$app): ?><div class = "ll">
             			<div class = "row">
-        	    			<div class="col-lg-4 col-lg-offset-2"><?php echo ($app["title"]); ?><input type="checkbox" name='access[]' level='1' value='<?php echo ($app["id"]); ?>_1'></div>
+        	    			<div class="col-lg-4 col-lg-offset-2"><?php echo ($app["title"]); ?><input type="checkbox" name='access[]' level='1' value='<?php echo ($app["id"]); ?>_1' <?php if($app["access"]): ?>checked='checked'<?php endif; ?> /></div>
 
         	    		</div>
                         <?php if(is_array($app["child"])): foreach($app["child"] as $key=>$action): ?><div class = "ll2">
                             <div class = "row">
-                                <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($action["title"]); ?><input type="checkbox" name='access[]' level='2' value='<?php echo ($action["id"]); ?>_2'></div>
+                                <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($action["title"]); ?><input type="checkbox" name='access[]' level='2' value='<?php echo ($action["id"]); ?>_2'  <?php if($action["access"]): ?>checked='checked'<?php endif; ?> /></div>
                             </div>
                             <?php if(is_array($action["child"])): foreach($action["child"] as $key=>$method): ?><div class = "row">
-                                    <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($method["title"]); ?><input type="checkbox" name='access[]' level='3' value='<?php echo ($method["id"]); ?>_3'></div>
+                                    <div class="col-lg-4 col-lg-offset-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($method["title"]); ?><input type="checkbox" name='access[]' level='3' value='<?php echo ($method["id"]); ?>_3'  <?php if($method["access"]): ?>checked='checked'<?php endif; ?> /></div>
                                 </div><?php endforeach; endif; ?></div><?php endforeach; endif; ?>
                     </div><?php endforeach; endif; ?>
 

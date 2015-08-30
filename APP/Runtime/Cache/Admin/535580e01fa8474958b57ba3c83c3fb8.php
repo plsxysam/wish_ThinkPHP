@@ -54,7 +54,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <div class = "navbar-right">
                 <ul class="nav navbar-nav">
-                        <li><a href="#">首页</a> </li>
+                        <li><a href="<?php echo U('Admin/');?>">首页</a> </li>
                         <li><a href="#">测试</a> </li>
                         <li><a href="#">开发</a> </li>
                         <li><a href="#">help</a> </li>
@@ -89,13 +89,41 @@
     <!--行-->
         <div class ="row"> 
         <!--列-->
-            <div class="col-lg-2"><a href="">用户列表</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/index');?>">用户列表</a></div>
             <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/role');?>">角色列表</a></div>
             <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/node');?>">节点列表</a></div>
-            <div class="col-lg-2"><a href="">添加用户</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addUser');?>">添加用户</a></div>
             <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addRole');?>">添加角色</a></div>
             <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addNode');?>">添加节点</a></div>
         </div>
+        <div class ="row"> 
+        <!--列-->
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/user');?>">ID</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/role');?>">username</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/node');?>">上一次登录时间</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addUser');?>">上一次登录IP</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addRole');?>">用户所属别组</a></div>
+            <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/addNode');?>">操作</a></div>
+        </div>
+        <?php if(is_array($user)): foreach($user as $key=>$v): ?><div class ="row"> 
+            <!--列-->
+                <div class="col-lg-2"><?php echo ($user["id"]); ?></div>
+                <div class="col-lg-2"><?php echo ($user["username"]); ?></div>
+                <div class="col-lg-2"><?php echo (date('Y-m-d H:i',$user["logintime"])); ?></div>
+                <div class="col-lg-2"><?php echo ($user["ip"]); ?></div>
+                <div class="col-lg-2">{}</div>
+                <div class="col-lg-2">删除</div>
+            </div>
+                <div class = "row">
+                    <div class="col-lg-2"><?php echo ($v["id"]); ?></div>
+                    <div class="col-lg-2"><?php echo ($v["name"]); ?></div>
+                    <div class="col-lg-4"><?php echo ($v["remark"]); ?></div>
+                    <div class="col-lg-2">
+                        <?php if($v["status"]): ?>开启<?php else: ?>关闭<?php endif; ?>
+                    </div>
+                    <div class="col-lg-2"><a href="<?php echo U('Admin/Rbac/access', array('rid' => $v["id"]));?>">配置权限</a></div>
+                </div><?php endforeach; endif; ?>
+
 
 
 </body>
