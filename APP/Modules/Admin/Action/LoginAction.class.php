@@ -30,15 +30,41 @@
 			$data = array(
 				'id' => $user['id'],
 				'logintime' => time(),
-				'loginip' => get_clien_ip,
+				'loginip' => get_client_ip(),
 				);
-			
-			session('uid', $user['id']);
+			M('user')->save($data);
+
+			session(C('USER_AUTH_KEY'), $user['id']);
 			session('username', $user['username']);
 			session('logintime', date('Y-m-d H:i:s', $user['logintime']));
 			session('loginip', $user['loginip']);
 
-			M('user')->save($data);
+			//超级管理员识别
+			if ($user['username'] == C('RBAC_SUPERADMIN')) {
+				session(C('ADMIN_AUTH_KEY'), true);
+			}
+			//读取用户权限
+			import('ORG.Util.RBAC');
+			RBAC::saveAccessList();
+
+			// select node.id,node.name from
+
+			// 	hd_role as role,
+			// 	hd_role_user as user,
+			// 	hd_access as access ,
+			// 	hd_node as node 
+
+			// 	where   user.user_id='2' and 
+			// 			user.role_id=role.id and 
+			// 			( access.role_id=role.id or (access.role_id=role.pid and role.pid!=0 ) ) and 
+			// 			role.status=1 and 
+			// 			access.node_id=node.id and 
+			// 			node.level=2 and 
+			// 			node.pid=1 and 
+			// 			node.status=1 
+
+			// die;
+
 			$this->redirect('Admin/Index/index');
 		} 
 		//验证码
